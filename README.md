@@ -2,6 +2,17 @@
 
 This is the starter code for the Route Planning project. Instructions for each exercise can be found in the `instructions` directory, and unit tests for some exercises in the `test` directory.
 
+## Cloning
+
+When cloning this project, be sure to use the `--recurse-submodules` flag. Using HTTPS:
+```
+git clone https://github.com/udacity/CppND-Route-Planning-Project.git --recurse-submodules
+```
+or with SSH:
+```
+git clone git@github.com:udacity/CppND-Route-Planning-Project.git --recurse-submodules
+```
+
 ## Compiling and Running
 
 ### Compiling
