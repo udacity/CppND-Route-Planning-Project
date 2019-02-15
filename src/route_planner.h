@@ -13,4 +13,5 @@ class RoutePlanner {
 
   private:
     // Add private variables or methods declarations here.
+    RouteModel &m_Model;
 };
