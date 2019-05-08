@@ -1,4 +1,4 @@
-The `Model` class that exists in the current code doesn't contain all the data or methods that will be needed to perfom an A\* search, so we are going to extend that class with a `RouteModel` class. In this exercise, you will fill out the `RouteModel` class in `route_model.h`. In the next exercises, you will also fill out the `RouteModel::Node` class as well.
+The `Model` class that exists in the current code doesn't contain all the data or methods that will be needed to perform an A\* search, so we are going to extend that class with a `RouteModel` class. In this exercise, you will fill out the `RouteModel` class in `route_model.h`. In the next exercises, you will also fill out the `RouteModel::Node` class as well.
 
 
 To complete this exercise:

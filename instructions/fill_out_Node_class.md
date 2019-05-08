@@ -1,4 +1,4 @@
-The `Model::Node` class that exists in the current code doesn't contain all the data that would be needed to perfom an A\* search. In order to perform a search, it would be ideal for each node to contain at least the following information:
+The `Model::Node` class that exists in the current code doesn't contain all the data that would be needed to perform an A\* search. In order to perform a search, it would be ideal for each node to contain at least the following information:
 - The g-value for the node.
 - The h-value for the node.
 - A boolean to indicate if the node has been visited.
