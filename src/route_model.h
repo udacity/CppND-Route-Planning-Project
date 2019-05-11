@@ -39,6 +39,6 @@ class RouteModel : public Model {
 
   private:
     // Add private RouteModel variables and methods here.
-    std::vector<Node> m_Nodes;
+    std::vector<RouteModel::Node> m_Nodes;
 
 };
