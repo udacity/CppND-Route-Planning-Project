@@ -16,7 +16,7 @@ class RouteModel : public Model {
         float h_value = std::numeric_limits<float>::max();
         float g_value = 0.f;
         bool visited = false;
-        std::vector<RouteModel::Node> neighbors;
+        std::vector<RouteModel::Node *> neighbors;
         
         Node(){}
         Node(int idx, RouteModel* search_model, Model::Node node) : 
