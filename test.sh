@@ -8,8 +8,8 @@ cd build
 #cmake ..
 #cmake .. "-DTESTING=RouteModel" 
 #cmake .. "-DTESTING=RMNodeClass" 
-cmake .. "-DTESTING=RMSNodes" 
-#cmake .. "-DTESTING=NodeDist" 
+#cmake .. "-DTESTING=RMSNodes" 
+cmake .. "-DTESTING=NodeDist" 
 #cmake .. "-DTESTING=NodeToRoad" 
 #cmake .. "-DTESTING=FindNeighbors" 
 #cmake .. "-DTESTING=FindClosest" 
