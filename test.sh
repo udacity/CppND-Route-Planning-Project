@@ -1,14 +1,14 @@
 #!/bin/bash
 rm -rf ./bin
-#rm -rf ./build
+rm -rf ./build
 
 mkdir build
 cd build
 
 #cmake ..
 #cmake .. "-DTESTING=RouteModel" 
-cmake .. "-DTESTING=RMNodeClass" 
-#cmake .. "-DTESTING=RMSNodes" 
+#cmake .. "-DTESTING=RMNodeClass" 
+cmake .. "-DTESTING=RMSNodes" 
 #cmake .. "-DTESTING=NodeDist" 
 #cmake .. "-DTESTING=NodeToRoad" 
 #cmake .. "-DTESTING=FindNeighbors" 
