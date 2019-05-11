@@ -1,6 +1,12 @@
 #include "route_model.h"
 #include <iostream>
 
+//Distance computation from another Node
+float RouteModel::Node::distance(const Model::Node &otherNode) const
+{
+    return std::sqrt(std::pow(this->x - otherNode.x, 2.f) + std::pow(this->y - otherNode.y, 2.f));
+}
+
 RouteModel::RouteModel(const std::vector<std::byte> &xml) : Model(xml) 
 {
     //1/ Convert all OSM Nodes to RouteModel::Node to be able to perform A*

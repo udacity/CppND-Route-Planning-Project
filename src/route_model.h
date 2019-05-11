@@ -23,6 +23,9 @@ class RouteModel : public Model {
             Model::Node(node), 
             parent_model(search_model), 
             index(idx) {}
+
+        //Distance computation from another Node
+        float distance(const Model::Node &otherNode) const;
       
       private:
         // Add private Node variables and methods here.
