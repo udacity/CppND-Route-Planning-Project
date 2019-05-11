@@ -12,14 +12,22 @@ class RouteModel : public Model {
     class Node : public Model::Node {
       public:
         // Add public Node variables and methods here.
+        RouteModel::Node* parent = nullptr;
+        float h_value = std::numeric_limits<float>::max();
+        float g_value = 0.f;
+        bool visited = false;
+        std::vector<RouteModel::Node> neighbors;
         
         Node(){}
-        Node(int idx, RouteModel * search_model, Model::Node node) : Model::Node(node), parent_model(search_model), index(idx) {}
+        Node(int idx, RouteModel* search_model, Model::Node node) : 
+            Model::Node(node), 
+            parent_model(search_model), 
+            index(idx) {}
       
       private:
         // Add private Node variables and methods here.
         int index;
-        RouteModel * parent_model = nullptr;
+        RouteModel* parent_model = nullptr;
     };
     
     // Add public RouteModel variables and methods here.

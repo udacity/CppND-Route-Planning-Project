@@ -26,6 +26,17 @@ $ sudo ln -s /usr/bin/g++-7 /usr/bin/g++
 $ g++ --version
 g++ (Ubuntu 7.4.0-1ubuntu1~16.04~ppa1) 7.4.0
 ```
+## Install recent GIT
+Ubuntu git package is a bit old and features like stash don't work with VS-Code, so update git:
+```
+$ git --version
+git version 2.7.4
+$ sudo add-apt-repository ppa:git-core/ppa
+$ sudo apt-get update
+$ sudo apt-get install git
+$ git --version
+git version 2.21.0
+```
 ## Compile recent Cmake
 Cmake ubuntu package version is too low, so download V3.14 from (https://cmake.org/download/)
 The compilation may take a small while...
