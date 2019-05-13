@@ -9,9 +9,19 @@
 class RoutePlanner {
   public:
     RoutePlanner(RouteModel &model, float start_x, float start_y, float end_x, float end_y);
-    // Add public variables or methods declarations here.
+
+    //Getters
+
+    //Get found solution distance
+    float GetDistance() { return distance; }
 
   private:
-    // Add private variables or methods declarations here.
+    // OSM model augmented to performed A*
     RouteModel &m_Model;
+
+    //Start and end Nodes of the search
+    RouteModel::Node start_node, end_node;
+
+    //Found route distance
+    float distance;
 };
