@@ -69,7 +69,7 @@ $ mkdir build
 $ cd build
 $ cmake ..
 $ make
-$ ../bin/CppND-Route-Planning-Project -f ./map.osm 
+$ ../bin/CppND-Route-Planning-Project -f ../map.osm 
 ```
 
 I have included ./build.sh and ./test.sh in the root to facilitate the compilation and run.

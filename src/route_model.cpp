@@ -10,6 +10,50 @@ float RouteModel::Node::distance(const Model::Node &otherNode) const
     return std::sqrt(std::pow(this->x - otherNode.x, 2.f) + std::pow(this->y - otherNode.y, 2.f));
 }
 
+//Populate the neighbors vector of this node 
+//   (closest nodes on all roads this node is on)
+void RouteModel::Node::FindNeighbors()
+{
+    //For each roads going through the node (from reverese map)
+    for (const Model::Road *roadPtr : parent_model->GetNodeToRoadMap()[index])
+    {
+        //Find closest non-visited node in the way list
+        RouteModel::Node* closest = FindNeighbor(parent_model->Ways()[roadPtr->way].nodes);
+
+        //If one was found, store it as a neigbor
+        if (closest != nullptr)
+            neighbors.push_back(closest);
+    }
+}
+
+//Find closest Node in a list from current
+RouteModel::Node* RouteModel::Node::FindNeighbor(vector<int> node_indices)
+{
+    RouteModel::Node* closestNode = nullptr;
+    float minDistance = std::numeric_limits<float>::max(); 
+
+    // Reference list of all the nodes 
+    vector<RouteModel::Node> &nodeList = parent_model->SNodes();
+
+    //For each of the nodes in the argument vector, if it was not visited yet
+    for (int nodeIdx : node_indices)
+    {
+        if (nodeList[nodeIdx].visited == false)
+        {
+            //record closer node and new min distance
+            //    (check for non-null distance to avoid itself)
+            float currDistance = distance(nodeList[nodeIdx]);
+            if (currDistance < minDistance && currDistance != 0)
+            {
+                minDistance = currDistance;
+                closestNode = &nodeList[nodeIdx];
+            }
+        }
+    }
+
+    return closestNode;
+}
+
 RouteModel::RouteModel(const std::vector<std::byte> &xml) : Model(xml) 
 {
     //Convert all OSM Nodes to RouteModel::Node to be able to perform A*
