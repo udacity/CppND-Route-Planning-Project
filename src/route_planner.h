@@ -13,14 +13,14 @@ class RoutePlanner {
     //Getters
 
     //Get found solution distance
-    float GetDistance() { return distance; }
+    float GetDistance() const { return distance; }
 
   private:
     // OSM model augmented to performed A*
     RouteModel &m_Model;
 
     //Start and end Nodes of the search
-    RouteModel::Node start_node, end_node;
+    RouteModel::Node *start_node, *end_node;
 
     //Found route distance
     float distance;
