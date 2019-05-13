@@ -33,11 +33,18 @@ class RouteModel : public Model {
 
         //Distance computation from another Node
         float distance(const Model::Node &otherNode) const;
+
+        //Populate the neighbors vector of this node 
+        //   (closest nodes on all roads this node is on)
+        void FindNeighbors();
       
       private:
         //Node index in list & parent reference
         int index;
         RouteModel* parent_model = nullptr;
+
+        //Find closest Node in a list from current
+        RouteModel::Node* FindNeighbor(std::vector<int> node_indices);
     };
     
     //Route model constructor
@@ -50,7 +57,7 @@ class RouteModel : public Model {
     std::vector<Node> path; 
 
     //Getter for the private nodes vector
-    std::vector<Node> &SNodes() { return m_Nodes; }
+    std::vector<RouteModel::Node> &SNodes() { return m_Nodes; }
 
   private:
     //Building of the reverse map

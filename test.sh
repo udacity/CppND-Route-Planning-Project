@@ -1,6 +1,6 @@
 #!/bin/bash
 rm -rf ./bin
-rm -rf ./build
+#rm -rf ./build
 
 mkdir build
 cd build
@@ -10,8 +10,8 @@ cd build
 #cmake .. "-DTESTING=RMNodeClass" 
 #cmake .. "-DTESTING=RMSNodes" 
 #cmake .. "-DTESTING=NodeDist" 
-cmake .. "-DTESTING=NodeToRoad" 
-#cmake .. "-DTESTING=FindNeighbors" 
+#cmake .. "-DTESTING=NodeToRoad" 
+cmake .. "-DTESTING=FindNeighbors" 
 #cmake .. "-DTESTING=FindClosest" 
 #cmake .. "-DTESTING=AStarStub" 
 #cmake .. "-DTESTING=AStarSearch"
