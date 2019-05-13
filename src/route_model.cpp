@@ -4,6 +4,12 @@ using std::cout;
 using std::endl;
 using std::vector;
 
+//========================================================
+// RouteModel::Node Class
+
+//---------------
+// Public methods
+
 //Distance computation from another Node
 float RouteModel::Node::distance(const Model::Node &otherNode) const
 {
@@ -25,6 +31,9 @@ void RouteModel::Node::FindNeighbors()
             neighbors.push_back(closest);
     }
 }
+
+//----------------
+// Private methods
 
 //Find closest Node in a list from current
 RouteModel::Node* RouteModel::Node::FindNeighbor(vector<int> node_indices)
@@ -54,6 +63,9 @@ RouteModel::Node* RouteModel::Node::FindNeighbor(vector<int> node_indices)
     return closestNode;
 }
 
+//========================================================
+// RouteModel Class
+
 RouteModel::RouteModel(const std::vector<std::byte> &xml) : Model(xml) 
 {
     //Convert all OSM Nodes to RouteModel::Node to be able to perform A*
@@ -65,6 +77,38 @@ RouteModel::RouteModel(const std::vector<std::byte> &xml) : Model(xml)
     //Build the reverse map from NodeIdx to Road*
     CreateNodeToRoadHashmap();
 }
+
+//---------------
+// Public methods
+
+//Find closest valid node from user input
+RouteModel::Node &RouteModel::FindClosestNode(float x, float y)
+{
+    //Create a temporary Node with user coo
+    Model::Node userNode {x, y};
+
+    //Current Node idx & min distance 
+    float minDistance = std::numeric_limits<float>::max(); 
+    int minNodeIdx = std::numeric_limits<int>::max();
+
+    //Nodes Idx in reverse-map are valid 
+    //  (avoids checking multiple times the same node from different streets)
+    for(auto ite : node_to_road)
+    {
+        //When current Node is closer, record it
+        float currDistance = SNodes()[ite.first].distance(userNode);
+        if (currDistance < minDistance)
+        {
+            minNodeIdx = ite.first;
+            minDistance = currDistance;
+        }
+    }
+
+    return SNodes()[minNodeIdx];
+}
+
+//----------------
+// Private methods
 
 //Building of the reverse map
 void RouteModel::CreateNodeToRoadHashmap(void)

@@ -59,6 +59,9 @@ class RouteModel : public Model {
     //Getter for the private nodes vector
     std::vector<RouteModel::Node> &SNodes() { return m_Nodes; }
 
+    //Find closest valid node from user input
+    RouteModel::Node &FindClosestNode(float x, float y);
+
   private:
     //Building of the reverse map
     void CreateNodeToRoadHashmap(void);

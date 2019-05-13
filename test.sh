@@ -11,8 +11,8 @@ cd build
 #cmake .. "-DTESTING=RMSNodes" 
 #cmake .. "-DTESTING=NodeDist" 
 #cmake .. "-DTESTING=NodeToRoad" 
-cmake .. "-DTESTING=FindNeighbors" 
-#cmake .. "-DTESTING=FindClosest" 
+#cmake .. "-DTESTING=FindNeighbors" 
+cmake .. "-DTESTING=FindClosest" 
 #cmake .. "-DTESTING=AStarStub" 
 #cmake .. "-DTESTING=AStarSearch"
 
