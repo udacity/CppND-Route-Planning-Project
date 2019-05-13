@@ -10,7 +10,8 @@ class RoutePlanner {
   public:
     RoutePlanner(RouteModel &model, float start_x, float start_y, float end_x, float end_y);
 
-    //Getters
+    //A* Search
+    void AStarSearch();
 
     //Get found solution distance
     float GetDistance() const { return distance; }
@@ -24,4 +25,7 @@ class RoutePlanner {
 
     //Found route distance
     float distance;
+
+    //Rebuild path from last Node, from parent to parent until reaching start node
+    std::vector<RouteModel::Node> ConstructFinalPath(RouteModel::Node *current_node);
 };
