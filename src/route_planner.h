@@ -28,4 +28,8 @@ class RoutePlanner {
 
     //Rebuild path from last Node, from parent to parent until reaching start node
     std::vector<RouteModel::Node> ConstructFinalPath(RouteModel::Node *current_node);
+
+    //Compute H Value of specific Node
+    //  (Heuristic is distance to end node)
+    float CalculateHValue(const RouteModel::Node node);
 };

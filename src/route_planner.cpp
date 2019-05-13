@@ -50,3 +50,11 @@ std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node 
 
     return pathFound;
 }
+
+//Compute H Value of specific Node
+//  (Heuristic is distance to end node)
+float RoutePlanner::CalculateHValue(const RouteModel::Node node)
+{
+    return node.distance(*end_node);
+}
+
