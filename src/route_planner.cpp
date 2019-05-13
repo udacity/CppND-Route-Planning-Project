@@ -58,3 +58,22 @@ float RoutePlanner::CalculateHValue(const RouteModel::Node node)
     return node.distance(*end_node);
 }
 
+//Helper function used by sort, to compare the F values of two nodes
+bool CompareF(const RouteModel::Node *a, RouteModel::Node *b) 
+{
+  return a->g_value + a->h_value > b->g_value + b->h_value ; 
+}
+
+//From the list of open Nodes, find the one with lowest F-value
+//  F is H(heuristic) + G(current weight)
+RouteModel::Node * RoutePlanner::NextNode()
+{
+    //sort the vector of Nodes
+    std::sort(open_list.begin(), open_list.end(), CompareF);
+
+    //Get smallest F value node, and pop-it from list
+    RouteModel::Node *result = open_list.back();
+    open_list.pop_back();
+    return result;
+}
+

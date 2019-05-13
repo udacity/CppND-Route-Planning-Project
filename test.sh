@@ -13,8 +13,8 @@ cd build
 #cmake .. "-DTESTING=NodeToRoad" 
 #cmake .. "-DTESTING=FindNeighbors" 
 #cmake .. "-DTESTING=FindClosest" 
-cmake .. "-DTESTING=AStarStub" 
-#cmake .. "-DTESTING=AStarSearch"
+#cmake .. "-DTESTING=AStarStub" 
+cmake .. "-DTESTING=AStarSearch"
 
 make 
 ../bin/test
