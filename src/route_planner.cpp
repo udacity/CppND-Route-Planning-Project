@@ -77,3 +77,28 @@ RouteModel::Node * RoutePlanner::NextNode()
     return result;
 }
 
+//Add new neigbor to node's list (and update its h/g/parent)
+void RoutePlanner::AddNeighbors(RouteModel::Node *newNode)
+{
+    //find all connected (non-visited) nodes
+    newNode->FindNeighbors();
+
+    //update found neigbors
+    for (auto currNeighbors : newNode->neighbors)
+    {
+        //link node to parent
+        currNeighbors->parent = newNode;
+
+        //update g (cost to reach neighbor) 
+        currNeighbors->g_value = newNode->g_value + newNode->distance(*currNeighbors);
+
+        //update heuristic (distance to target)
+        currNeighbors->h_value = CalculateHValue(*currNeighbors);
+
+        //add neigbor to open list
+        open_list.push_back(currNeighbors);
+
+        //mark as visited to avoid re-use
+        currNeighbors->visited = true;
+    }
+}

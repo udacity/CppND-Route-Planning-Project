@@ -39,4 +39,7 @@ class RoutePlanner {
     //From the list of open Nodes, find the one with lowest F-value
     //  F is H(heuristic) + G(current weight)
     RouteModel::Node * NextNode();
+
+    //Add new neigbor to node's list (and update its h/g/parent)
+    void AddNeighbors(RouteModel::Node *newNode);
 };
