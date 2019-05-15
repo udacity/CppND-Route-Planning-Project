@@ -21,9 +21,31 @@ RoutePlanner::RoutePlanner(RouteModel &model,
 //A* Search
 void RoutePlanner::AStarSearch()
 {
-    //Temporary stub, direct path from start to end
-    end_node->parent = start_node;
-    m_Model.path = ConstructFinalPath(end_node);
+    //Set start node to visited & push to list
+    start_node->visited = true;
+    open_list.push_back(start_node);
+
+    //process open list until empty of destination is reached
+    RouteModel::Node *current_node = nullptr;
+    while (open_list.size() > 0)
+    {
+        //Find smallest f value
+        current_node = NextNode();
+
+        //check if destination is reached and build final path
+        if (current_node->distance(*end_node) == 0)
+        {
+            m_Model.path = ConstructFinalPath(current_node);
+            return;
+        }
+
+        //Add any non visited neigbor nodes to open list
+        AddNeighbors(current_node);
+    }
+
+    //Todo: if the path is not found ?
+
+    return;
 }
 
 //----------------
@@ -49,4 +71,56 @@ std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node 
     distance *= m_Model.MetricScale();
 
     return pathFound;
+}
+
+//Compute H Value of specific Node
+//  (Heuristic is distance to end node)
+float RoutePlanner::CalculateHValue(const RouteModel::Node node)
+{
+    return node.distance(*end_node);
+}
+
+//Helper function used by sort, to compare the F values of two nodes
+bool CompareF(const RouteModel::Node *a, RouteModel::Node *b) 
+{
+  return a->g_value + a->h_value > b->g_value + b->h_value ; 
+}
+
+//From the list of open Nodes, find the one with lowest F-value
+//  F is H(heuristic) + G(current weight)
+RouteModel::Node * RoutePlanner::NextNode()
+{
+    //sort the vector of Nodes
+    std::sort(open_list.begin(), open_list.end(), CompareF);
+
+    //Get smallest F value node, and pop-it from list
+    RouteModel::Node *result = open_list.back();
+    open_list.pop_back();
+    return result;
+}
+
+//Add new neigbor to node's list (and update its h/g/parent)
+void RoutePlanner::AddNeighbors(RouteModel::Node *newNode)
+{
+    //find all connected (non-visited) nodes
+    newNode->FindNeighbors();
+
+    //update found neigbors
+    for (auto currNeighbors : newNode->neighbors)
+    {
+        //link node to parent
+        currNeighbors->parent = newNode;
+
+        //update g (cost to reach neighbor) 
+        currNeighbors->g_value = newNode->g_value + newNode->distance(*currNeighbors);
+
+        //update heuristic (distance to target)
+        currNeighbors->h_value = CalculateHValue(*currNeighbors);
+
+        //add neigbor to open list
+        open_list.push_back(currNeighbors);
+
+        //mark as visited to avoid re-use
+        currNeighbors->visited = true;
+    }
 }
