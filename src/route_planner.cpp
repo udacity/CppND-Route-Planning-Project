@@ -21,9 +21,31 @@ RoutePlanner::RoutePlanner(RouteModel &model,
 //A* Search
 void RoutePlanner::AStarSearch()
 {
-    //Temporary stub, direct path from start to end
-    end_node->parent = start_node;
-    m_Model.path = ConstructFinalPath(end_node);
+    //Set start node to visited & push to list
+    start_node->visited = true;
+    open_list.push_back(start_node);
+
+    //process open list until empty of destination is reached
+    RouteModel::Node *current_node = nullptr;
+    while (open_list.size() > 0)
+    {
+        //Find smallest f value
+        current_node = NextNode();
+
+        //check if destination is reached and build final path
+        if (current_node->distance(*end_node) == 0)
+        {
+            m_Model.path = ConstructFinalPath(current_node);
+            return;
+        }
+
+        //Add any non visited neigbor nodes to open list
+        AddNeighbors(current_node);
+    }
+
+    //Todo: if the path is not found ?
+
+    return;
 }
 
 //----------------
