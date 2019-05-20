@@ -58,10 +58,18 @@ int main(int argc, const char **argv)
     RouteModel model{osm_data};
 
     // Perform search and render results.
-    RoutePlanner route_planner{model, 10, 10, 90, 90};
+    float start_x, start_y, end_x, end_y {};
+    std::cout << "\nLower left corner of the map x,y = (0, 0), upper right corner = (100,100)"; 
+    std::cout << std::endl<< "Please enter start x and y separated by a space: ";      
+    std::cin >> start_x >> start_y;
+    std::cout << std::endl<< "Please enter destination x and y separated by a space: ";  
+    std::cin >> end_x >> end_y;
+    
+    RoutePlanner route_planner{model, start_x, start_y, end_x, end_y};
+    route_planner.AStarSearch();
     Render render{model};
-
-    auto display = io2d::output_surface{400, 400, io2d::format::argb32, io2d::scaling::none, io2d::refresh_style::fixed, 30};
+	std::cout << "Distance: " << route_planner.GetDistance() << " meters.\n";
+    auto display = io2d::output_surface{800, 800, io2d::format::argb32, io2d::scaling::none, io2d::refresh_style::fixed, 30};
     display.size_change_callback([](io2d::output_surface& surface){
         surface.dimensions(surface.display_dimensions());
     });
