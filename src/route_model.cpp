@@ -45,7 +45,7 @@ void RouteModel::Node::FindNeighbors(){
     }
 }
 
-//the method below taken from damians solution in the forums (https://github.com/dbecad/CppND-Route-Planning-Project)
+//the method below taken from damiens solution in the forums (https://github.com/dbecad/CppND-Route-Planning-Project)
 //not used in submitted version, because it fails the tests (because resulting route is better ;-) )
 void RouteModel::Node::FindNeighbors_v2_better() 
 {

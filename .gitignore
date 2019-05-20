@@ -1,6 +1,7 @@
 *.swp
 *.osm
 *.o
+*.zip
 draw.cpp
 test.cpp
 build/

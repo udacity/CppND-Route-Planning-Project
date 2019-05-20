@@ -11,7 +11,6 @@ RoutePlanner::RoutePlanner(RouteModel &model, float start_x, float start_y, floa
 }
 std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node *current_node){
 	distance = 0.0f;
- 	RouteModel::Node *tempnode;
   	std::vector<RouteModel::Node> path_found {};
   	while (current_node->parent !=nullptr){
     	path_found.push_back(*current_node);
@@ -54,8 +53,8 @@ RouteModel::Node *RoutePlanner::NextNode(){
 }
 
 void RoutePlanner::AddNeighbors(RouteModel::Node* node){
-    //node->FindNeighbors_v2_better(); //change back to FindNeighbors() for original version
-    node->FindNeighbors();
+    node->FindNeighbors_v2_better(); //change back to FindNeighbors() to pass tests
+    //node->FindNeighbors();
     for (auto neighbor : node->neighbors){
          neighbor->parent = node;
          neighbor->g_value = node->g_value + node->distance(*neighbor);
