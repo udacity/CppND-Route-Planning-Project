@@ -35,87 +35,8 @@ std::vector<std::byte> ReadOSMData(const std::string &path) {
     return osm_data;
 }
 
-
-class RouteModelTest : public ::testing::Test {
-  protected:
-    std::string osm_data_file = "../map.osm";
-    std::vector<std::byte> osm_data = ReadOSMData(osm_data_file);
-    RouteModel model{osm_data};
-};
-
-
-// Test that the path size is zero initially.
-TEST_F(RouteModelTest, RouteModelData) {
-    EXPECT_EQ(model.path.size(), 0);
-    EXPECT_EQ(model.Nodes().size(), model.SNodes().size());
-}
-
-
-// Test that the RouteModel::Node class is defined correctly.
-TEST_F(RouteModelTest, RouteModelNode) {
-    RouteModel::Node test_node = model.SNodes()[1];
-    EXPECT_FLOAT_EQ(test_node.x, 1.2646476);
-    EXPECT_FLOAT_EQ(test_node.y, 0.23506972);
-    EXPECT_EQ(test_node.parent, nullptr);
-    EXPECT_FLOAT_EQ(test_node.h_value, std::numeric_limits<float>::max());
-    EXPECT_FLOAT_EQ(test_node.g_value, 0.0);
-    EXPECT_FLOAT_EQ(test_node.visited, false);
-    EXPECT_EQ(test_node.neighbors.size(), 0);
-    RouteModel::Node test_node_2 = RouteModel::Node();
-}
-
-// Test the distance function between nodes.
-TEST_F(RouteModelTest, NodeDistance) {
-    RouteModel::Node test_node = model.SNodes()[1];
-    RouteModel::Node test_node_2 = model.SNodes()[4];
-    EXPECT_FLOAT_EQ(test_node.distance(test_node_2), 0.10309877);
-}
-
-// Test the data created by CreateNodeToRoadHashmap.
-TEST_F(RouteModelTest, NodeToRoad) {
-    auto node_to_road = model.GetNodeToRoadMap();
-    EXPECT_EQ(node_to_road[0].size(), 2);
-    EXPECT_EQ(node_to_road[30].size(), 2);
-    EXPECT_EQ(node_to_road[90].size(), 2);
-    EXPECT_EQ(node_to_road[0][0]->way, 500);
-    EXPECT_EQ(node_to_road[30][1]->way, 613);
-    EXPECT_EQ(node_to_road[90][1]->way, 475);
-}
-
-// Test the FindNeighbors method.
-TEST_F(RouteModelTest, FindNeighbors) {
-    auto test_node = model.SNodes()[0];
-    test_node.FindNeighbors();
-    EXPECT_EQ(test_node.neighbors.size(), 2);
-    EXPECT_FLOAT_EQ(test_node.neighbors[1]->x, 1.3250526);
-    EXPECT_FLOAT_EQ(test_node.neighbors[1]->y, 0.41849667);
-    test_node.neighbors.clear(); // Clear out neighbors just added.
-    test_node = model.SNodes()[100];
-    test_node.FindNeighbors();
-    EXPECT_EQ(test_node.neighbors.size(), 2);
-    EXPECT_FLOAT_EQ(test_node.neighbors[0]->x, 0.77367586);
-    EXPECT_FLOAT_EQ(test_node.neighbors[0]->y, 0.52004427);
-    test_node.neighbors.clear();
-}
-
-// Test the FindClosestNode method.
-TEST_F(RouteModelTest, FindClosestNode) {
-    float x = 0.023456;
-    float y = 0.567890;
-    auto& test_node = model.FindClosestNode(x, y);
-    EXPECT_EQ(&test_node, &model.SNodes()[10155]);
-    EXPECT_FLOAT_EQ(test_node.x, 0.030928569);
-    EXPECT_FLOAT_EQ(test_node.y, 0.58042318);
-    x = 0.555555;
-    y = 0.333333;
-    auto& test_node_2 = model.FindClosestNode(x, y);
-    EXPECT_EQ(&test_node_2, &model.SNodes()[600]);
-    EXPECT_FLOAT_EQ(test_node_2.x, 0.58249766);
-    EXPECT_FLOAT_EQ(test_node_2.y, 0.34965551);
-}
-
 //--------------------------------//
-//   Beginning RouteModel Tests.
+//   Beginning RoutePlanner Tests.
 //--------------------------------//
 
 class RoutePlannerTest : public ::testing::Test {
@@ -132,15 +53,66 @@ class RoutePlannerTest : public ::testing::Test {
     float end_y = 0.9;
     RouteModel::Node* start_node = &model.FindClosestNode(start_x, start_y);
     RouteModel::Node* end_node = &model.FindClosestNode(end_x, end_y);
+
+    // Construct another node in the middle of the map for testing.
+    float mid_x = 0.5;
+    float mid_y = 0.5;
+    RouteModel::Node* mid_node = &model.FindClosestNode(mid_x, mid_y);
 };
 
 
-// Test the AStarSearch method stub.
-TEST_F(RoutePlannerTest, AStarSearch) {
+// Test the CalculateHValue method.
+TEST_F(RoutePlannerTest, TestCalculateHValue) {
+    EXPECT_FLOAT_EQ(route_planner.CalculateHValue(start_node), 1.1329799);
+    EXPECT_FLOAT_EQ(route_planner.CalculateHValue(end_node), 0.0f);
+    EXPECT_FLOAT_EQ(route_planner.CalculateHValue(mid_node), 0.58903033);
+}
+
+
+
+// Test the AddNeighbors method.
+bool NodesSame(RouteModel::Node* a, RouteModel::Node* b) { return a == b; }
+TEST_F(RoutePlannerTest, TestAddNeighbors) {
+    route_planner.AddNeighbors(start_node);
+
+    // Correct h and g values for the neighbors of start_node.
+    std::vector<float> start_neighbor_g_vals{0.10671431, 0.082997195, 0.051776856, 0.055291083};
+    std::vector<float> start_neighbor_h_vals{1.1828455, 1.0998145, 1.0858033, 1.1831238};
+    auto neighbors = start_node->neighbors;
+    EXPECT_EQ(neighbors.size(), 4);
+
+    // Check results for each neighbor.
+    for (int i = 0; i < neighbors.size(); i++) {
+        EXPECT_PRED2(NodesSame, neighbors[i]->parent, start_node);
+        EXPECT_FLOAT_EQ(neighbors[i]->g_value, start_neighbor_g_vals[i]);
+        EXPECT_FLOAT_EQ(neighbors[i]->h_value, start_neighbor_h_vals[i]);
+        EXPECT_EQ(neighbors[i]->visited, true);
+    }
+}
+
+
+// Test the ConstructFinalPath method.
+TEST_F(RoutePlannerTest, TestConstructFinalPath) {
+    // Construct a path.
+    mid_node->parent = start_node;
+    end_node->parent = mid_node;
+    std::vector<RouteModel::Node> path = route_planner.ConstructFinalPath(end_node);
+
+    // Test the path.
+    EXPECT_EQ(path.size(), 3);
+    EXPECT_FLOAT_EQ(start_node->x, path.front().x);
+    EXPECT_FLOAT_EQ(start_node->y, path.front().y);
+    EXPECT_FLOAT_EQ(end_node->x, path.back().x);
+    EXPECT_FLOAT_EQ(end_node->y, path.back().y);
+}
+
+
+// Test the AStarSearch method.
+TEST_F(RoutePlannerTest, TestAStarSearch) {
     route_planner.AStarSearch();
     EXPECT_EQ(model.path.size(), 33);
-    RouteModel::Node path_start = model.path.back();
-    RouteModel::Node path_end = model.path.front();
+    RouteModel::Node path_start = model.path.front();
+    RouteModel::Node path_end = model.path.back();
     // The start_node and end_node x, y values should be the same as in the path.
     EXPECT_FLOAT_EQ(start_node->x, path_start.x);
     EXPECT_FLOAT_EQ(start_node->y, path_start.y);
