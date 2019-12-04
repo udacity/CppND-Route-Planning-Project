@@ -31,7 +31,7 @@ class RouteModel : public Model {
         Node * FindNeighbor(std::vector<int> node_indices);
         RouteModel * parent_model = nullptr;
     };
-
+   
     RouteModel(const std::vector<std::byte> &xml);
     Node &FindClosestNode(float x, float y);
     auto &SNodes() { return m_Nodes; }
