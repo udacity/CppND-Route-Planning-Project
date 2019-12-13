@@ -30,10 +30,11 @@ static std::optional<std::vector<std::byte>> ReadFile(const std::string &path)
 
 float ReadFloatInput(float& f)
 {
-    while(!(std::cin >> f){
-        cout << "Bad input! Input must be a float.\n";
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    while(!(std::cin >> f))
+    {
+        std::cout << "Bad input! Input must be a float.\n";
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 }
 
