@@ -62,3 +62,5 @@ The testing executable is also placed in the `build` directory. From within `bui
 ## NOTE
 
 finally build and run from ubuntu VM
+cloning the third party
+every thing shuld work !
