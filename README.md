@@ -65,3 +65,4 @@ finally build and run from ubuntu VM
 cloning the third party
 every thing shuld work !
 edited in wsl 
+ok fine 
