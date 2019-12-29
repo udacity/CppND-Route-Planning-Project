@@ -64,3 +64,4 @@ The testing executable is also placed in the `build` directory. From within `bui
 finally build and run from ubuntu VM
 cloning the third party
 every thing shuld work !
+edited in wsl 

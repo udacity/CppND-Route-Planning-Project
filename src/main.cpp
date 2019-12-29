@@ -57,6 +57,7 @@ int main(int argc, const char **argv)
     // RoutePlanner object below in place of 10, 10, 90, 90.
 
     // Build Model.
+    // edited in wsl
     RouteModel model{osm_data};
 
     // Create RoutePlanner object and perform A* search.
