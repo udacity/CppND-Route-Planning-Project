@@ -66,3 +66,4 @@ cloning the third party
 every thing shuld work !
 edited in wsl 
 ok fine 
+udacity vm edition test
