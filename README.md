@@ -59,3 +59,6 @@ The testing executable is also placed in the `build` directory. From within `bui
 ./test
 ```
 
+## NOTE
+
+finally build and run from ubuntu VM
