@@ -55,15 +55,16 @@ int main(int argc, const char **argv)
     // TODO 1: Declare floats `start_x`, `start_y`, `end_x`, and `end_y` and get
     // user input for these values using std::cin. Pass the user input to the
     // RoutePlanner object below in place of 10, 10, 90, 90
+    std::cout << "---------------------------------------------------------------------------------------------------" << std::endl;
     float start_x , start_y , end_x, end_y;
-    std::cout << "Please Enter starting point for start_X : " << std::endl;
+    std::cout << "Please Enter starting point and point between (0 and 99) for the search, Starting point for start_X : ";
     std::cin >> start_x;
-    std::cout << "Please Enter starting point for start_Y : " << std::endl;
+    std::cout << "Starting point for start_Y : " ;
     std::cin >> start_y;
-    std::cout << "Please Enter ending point for end_X : " << std::endl;
+    std::cout << "Ending point for end_X : " ;
     std::cin >> end_x;
-    std::cout << "Please Enter ending point for end_Y : " << std::endl;
-    std::cin >> end_y;
+    std::cout << "Ending point for end_Y : " ;
+    std::cin >> end_y ;
 
 
     // Build Model.
