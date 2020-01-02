@@ -67,3 +67,11 @@ every thing shuld work !
 edited in wsl 
 ok fine 
 udacity vm edition test
+
+
+--- 
+GUI on vscode
+https://virtualizationreview.com/articles/2018/01/30/hands-on-with-wsl-graphical-apps.aspx
+
+# export DISPLAY=:0
+# xeyes
