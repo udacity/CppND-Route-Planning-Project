@@ -77,15 +77,15 @@ int main(int argc, const char **argv)
     std::cout << "Distance: " << route_planner.GetDistance() << " meters. \n";
 
     // Render results of search.
-    Render render{model};
+    // Render render{model};
 
-    auto display = io2d::output_surface{400, 400, io2d::format::argb32, io2d::scaling::none, io2d::refresh_style::fixed, 30};
-    display.size_change_callback([](io2d::output_surface& surface){
-        surface.dimensions(surface.display_dimensions());
-    });
-    display.draw_callback([&](io2d::output_surface& surface){
-        render.Display(surface);
-    });
-    display.begin_show();
+    // auto display = io2d::output_surface{400, 400, io2d::format::argb32, io2d::scaling::none, io2d::refresh_style::fixed, 30};
+    // display.size_change_callback([](io2d::output_surface& surface){
+    //     surface.dimensions(surface.display_dimensions());
+    // });
+    // display.draw_callback([&](io2d::output_surface& surface){
+    //     render.Display(surface);
+    // });
+    // display.begin_show();
     
 }
