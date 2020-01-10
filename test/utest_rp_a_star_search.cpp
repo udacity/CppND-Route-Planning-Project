@@ -74,7 +74,8 @@ TEST_F(RoutePlannerTest, TestCalculateHValue) {
 bool NodesSame(RouteModel::Node* a, RouteModel::Node* b) { return a == b; }
 TEST_F(RoutePlannerTest, TestAddNeighbors) {
     route_planner.AddNeighbors(start_node);
-
+    // for test addieighbors
+    //std::cout << start_node->g_value<< "\n";
     // Correct h and g values for the neighbors of start_node.
     std::vector<float> start_neighbor_g_vals{0.10671431, 0.082997195, 0.051776856, 0.055291083};
     std::vector<float> start_neighbor_h_vals{1.1828455, 1.0998145, 1.0858033, 1.1831238};
