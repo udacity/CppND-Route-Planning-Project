@@ -77,7 +77,7 @@ bool Comparison(RouteModel::Node *a,  RouteModel::Node *b)
 RouteModel::Node *RoutePlanner::NextNode() 
 {
     std::sort(open_list.begin(), open_list.end(), Comparison);
-    auto node = open_list.back(); //sort type  
+    auto node = open_list.back(); //sort type deter 
     open_list.pop_back();
     return node;
 }
