@@ -64,7 +64,7 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node)
 
 
 // TODO 5: Complete the NextNode method to sort the open list and return the next node.
-// Tips:-
+// Tips:
 // - Sort the open_list according to the sum of the h value and g value.
 // - Create a pointer to the node in the list with the lowest sum.
 // - Remove that node from the open_list.
