@@ -57,13 +57,14 @@ int main(int argc, const char **argv)
     // RoutePlanner object below in place of 10, 10, 90, 90
     std::cout << "---------------------------------------------------------------------------------------------------" << std::endl;
     float start_x , start_y , end_x, end_y;
-    std::cout << "Please Enter starting point and point between (0 and 99) for the search, Starting point for start_X : ";
+    std::cout << "Please Enter starting point and point between (0 and 99) for the search: " << std::endl;
+    std::cout << "Starting point for start_x : ";
     std::cin >> start_x;
-    std::cout << "Starting point for start_Y : " ;
+    std::cout << "Starting point for start_y : " ;
     std::cin >> start_y;
-    std::cout << "Ending point for end_X : " ;
+    std::cout << "Ending point for end_x : " ;
     std::cin >> end_x;
-    std::cout << "Ending point for end_Y : " ;
+    std::cout << "Ending point for end_y : " ;
     std::cin >> end_y ;
 
 
@@ -77,15 +78,15 @@ int main(int argc, const char **argv)
     std::cout << "Distance: " << route_planner.GetDistance() << " meters. \n";
 
     // Render results of search.
-    Render render{model};
+    // Render render{model};
 
-    auto display = io2d::output_surface{400, 400, io2d::format::argb32, io2d::scaling::none, io2d::refresh_style::fixed, 30};
-    display.size_change_callback([](io2d::output_surface& surface){
-        surface.dimensions(surface.display_dimensions());
-    });
-    display.draw_callback([&](io2d::output_surface& surface){
-        render.Display(surface);
-    });
-    display.begin_show();
+    // auto display = io2d::output_surface{400, 400, io2d::format::argb32, io2d::scaling::none, io2d::refresh_style::fixed, 30};
+    // display.size_change_callback([](io2d::output_surface& surface){
+    //     surface.dimensions(surface.display_dimensions());
+    // });
+    // display.draw_callback([&](io2d::output_surface& surface){
+    //     render.Display(surface);
+    // });
+    // display.begin_show();
     
 }
