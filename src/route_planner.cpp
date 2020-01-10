@@ -65,19 +65,21 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node)
 // - Create a pointer to the node in the list with the lowest sum.
 // - Remove that node from the open_list.
 // - Return the pointer.
-bool Compareison(const std::vector<int> a, const std::vector<int> b)
+
+//The Comparisson Function: 
+bool Comparison(RouteModel::Node *a,  RouteModel::Node *b)
 {
-    int f1 = a[2] + a[3]; // f1 = g1 + h1
-    int f2 = b[2] + b[3]; // f2 = g2 + h2
+    int f1 = a->g_value + a->h_value; // f1 = g1 + h1
+    int f2 = b->g_value + b->h_value; // f2 = g2 + h2
     return f1 > f2; 
 }
 
-RouteModel::Node *RoutePlanner::NextNode(std::vector<std::vector<int>> *open_list) 
+RouteModel::Node *RoutePlanner::NextNode() 
 {
-    sort(open_list->begin(), open_list->end(), Compareison);
-    auto *Node = &open_list->begin();
-    open_list->pop_back();
-    return Node;
+    std::sort(open_list.begin(), open_list.end(), Comparison);
+    auto node = open_list.back(); //sort type  
+    open_list.pop_back();
+    return node;
 }
 
 
@@ -113,4 +115,6 @@ void RoutePlanner::AStarSearch()
 {
     RouteModel::Node *current_node = nullptr;
     // TODO: Implement your solution here.
+
+
 }

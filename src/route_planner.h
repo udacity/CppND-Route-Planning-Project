@@ -18,7 +18,10 @@ class RoutePlanner {
     void AddNeighbors(RouteModel::Node *current_node);
     float CalculateHValue(RouteModel::Node const *node);
     std::vector<RouteModel::Node> ConstructFinalPath(RouteModel::Node *);
-    RouteModel::Node *NextNode(std::vector<std::vector<int>> *open_list);
+    RouteModel::Node *NextNode();
+
+    //Trying to put Comparison as class member
+    //bool Comparison(RouteModel::Node *a,  RouteModel::Node *b);
 
   private:
     // Add private variables or methods declarations here.
@@ -28,6 +31,8 @@ class RoutePlanner {
 
     float distance = 0.0f;
     RouteModel &m_Model;
+
+    
 };
 
 #endif
