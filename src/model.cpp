@@ -131,6 +131,7 @@ void Model::LoadData(const std::vector<std::byte> &xml)
         }
     }
     
+    
     for( const auto &relation: doc.select_nodes("/osm/relation") ) {
         auto node = relation.node();
         auto noode_id = std::string_view{node.attribute("id").as_string()};

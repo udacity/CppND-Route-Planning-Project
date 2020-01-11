@@ -68,7 +68,7 @@ int main(int argc, const char **argv)
     std::cin >> end_y ;
 
 
-    // Build Model.
+    // Build Model
     RouteModel model{osm_data};
 
     // Create RoutePlanner object and perform A* search.

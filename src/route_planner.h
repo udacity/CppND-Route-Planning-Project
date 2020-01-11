@@ -23,6 +23,8 @@ class RoutePlanner {
     //Trying to put Comparison as class member
     //bool Comparison(RouteModel::Node *a,  RouteModel::Node *b);
 
+    //bool Comparison(RouteModel::Node *, RouteModel::Node *);
+
   private:
     // Add private variables or methods declarations here.
     std::vector<RouteModel::Node*> open_list;
