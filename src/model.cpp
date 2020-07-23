@@ -44,7 +44,18 @@ Model::Model( const std::vector<std::byte> &xml )
     AdjustCoordinates();
 
     std::sort(m_Roads.begin(), m_Roads.end(), [](const auto &_1st, const auto &_2nd){
-        return (int)_1st.type < (int)_2nd.type; 
+        if (_1st.type < _2nd.type)
+        {
+            return 1;
+        }
+        else if (_1st.way < _2nd.way)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
     });
 }
 
