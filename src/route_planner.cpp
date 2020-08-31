@@ -2,14 +2,15 @@
 #include <algorithm>
 
 RoutePlanner::RoutePlanner(RouteModel &model, float start_x, float start_y, float end_x, float end_y): m_Model(model) {
-    // Convert inputs to percentage:
+
+   // Convert inputs to percentage:
     start_x *= 0.01;
     start_y *= 0.01;
     end_x *= 0.01;
     end_y *= 0.01;
 
-    *start_node = m_Model.FindClosestNode(start_x, start_y);
-    *end_node = m_Model.FindClosestNode(end_x, end_y);
+    this->start_node = &m_Model.FindClosestNode(start_x, start_y);
+    this->end_node = &m_Model.FindClosestNode(end_x, end_y);
     // TODO 2: Use the m_Model.FindClosestNode method to find the closest nodes to the starting and ending coordinates.
     // Store the nodes you find in the RoutePlanner's start_node and end_node attributes.
 
@@ -34,7 +35,14 @@ float RoutePlanner::CalculateHValue(RouteModel::Node const *node) {
 // - For each node in current_node.neighbors, add the neighbor to open_list and set the node's visited attribute to true.
 
 void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
-
+    current_node->FindNeighbors();
+    for(auto neighbour: current_node->neighbors){
+        neighbour->parent = current_node;
+        neighbour->g_value = neighbour->distance(*current_node) + current_node->g_value;
+        neighbour->h_value = this->CalculateHValue(neighbour);
+        open_list.emplace_back(neighbour);
+        neighbour->visited = true;
+    }
 }
 
 
