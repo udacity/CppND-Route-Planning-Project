@@ -53,8 +53,15 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
 // - Remove that node from the open_list.
 // - Return the pointer.
 
-RouteModel::Node *RoutePlanner::NextNode() {
+bool Compare(RouteModel::Node *n1, RouteModel::Node *n2 ){
+    return (n1->g_value + n1->h_value) > (n2->g_value + n2->h_value);
+}
 
+RouteModel::Node *RoutePlanner::NextNode() {
+    std::sort(open_list.begin(), open_list.end(), Compare);
+    auto lowest_sum_node = open_list.back();
+    open_list.pop_back();
+    return lowest_sum_node;
 }
 
 
