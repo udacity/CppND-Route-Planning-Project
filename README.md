@@ -98,7 +98,7 @@ The testing executable is also placed in the `build` directory. From within `bui
       * Configure CLion to use the WSL [toolchain](https://www.jetbrains.com/help/clion/how-to-use-wsl-development-environment-in-product.html#wsl-tooclhain)
       * Use the WSL toolchain to build the project
      
-
 * If you are facing errors with --config try to remove -- from the command.
 
+* This will not work with Ubuntu under Windows Subsystem for Linux (WSL). See [this issue](https://github.com/udacity/CppND-Route-Planning-Project/issues/9) for alternatives.
 
