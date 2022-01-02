@@ -8,4 +8,5 @@ build/
 bin/
 lib/
 .github/**
+.vscode/**
 thirdparty/P0267_RefImpl/**
