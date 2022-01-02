@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "deque": "cpp",
+        "forward_list": "cpp",
+        "list": "cpp",
+        "*.tcc": "cpp"
+    }
+}
