@@ -29,7 +29,6 @@ git clone git@github.com:udacity/CppND-Route-Planning-Project.git --recurse-subm
 * IO2D
   * Installation instructions for all operating systems can be found [here](https://github.com/cpp-io2d/P0267_RefImpl/blob/master/BUILDING.md)
   * This library must be built in a place where CMake `find_package` will be able to find it
- 
 
 ## Compiling and Running
 
@@ -59,47 +58,4 @@ The testing executable is also placed in the `build` directory. From within `bui
 ```
 ./test
 ```
-
-## Troubleshooting
-* Some students have reported issues in cmake to find io2d packages, make sure you have downloaded [this](https://github.com/cpp-io2d/P0267_RefImpl/blob/master/BUILDING.md#xcode-and-libc).
-* For MAC Users cmake issues: Comment these lines from CMakeLists.txt under P0267_RefImpl
-    ```
-    if( NOT DEFINED IO2D_WITHOUT_SAMPLES )
-	     add_subdirectory(P0267_RefImpl/Samples)
-    endif()
-    ```
-    And then run "ALL_Build" and "install" in XCode.
-    
-    If any packages are missing try to install packages using 
-    ```
-    brew install pkg-config
-    ```
- * For Ubuntu Linux IO2D installation errors, follow the given steps:
-   ```
-	sudo apt update
-	sudo apt install build-essential
-	sudo apt install cmake
-	sudo apt install libcairo2-dev
-	sudo apt install libgraphicsmagick1-dev
-	sudo apt install libpng-dev
-
-	git clone --recurse-submodules https://github.com/cpp-io2d/P0267_RefImpl
-	cd P0267_RefImpl
-	mkdir Debug
-	cd Debug
-	cmake --config Debug "-DCMAKE_BUILD_TYPE=Debug" ..
-	cmake --build .
-	sudo make install
-   ```
-     
- * If you are working on windows and unable to install IO2D:
-      * Enable WSL (Windows Subsystem for Linux) and use a distribution like [Ubuntu](https://ubuntu.com/wsl).(available from the windows store): 
-      * Install the required dependencies (compiler, cmake etc.) in the WSL(as mentioned above for ubuntu)
-      * Configure CLion to use the WSL [toolchain](https://www.jetbrains.com/help/clion/how-to-use-wsl-development-environment-in-product.html#wsl-tooclhain)
-      * Use the WSL toolchain to build the project
-      * If you are still facing errors, visit this [link](https://github.com/udacity/CppND-Route-Planning-Project/issues/9).
-     
-
-* If you are facing errors with --config try to remove -- from the command.
-
 

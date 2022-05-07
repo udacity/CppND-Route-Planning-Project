@@ -48,7 +48,7 @@ void RouteModel::Node::FindNeighbors() {
         if (new_neighbor) {
             this->neighbors.emplace_back(new_neighbor);
         }
-    }
+    }    
 }
 
 
