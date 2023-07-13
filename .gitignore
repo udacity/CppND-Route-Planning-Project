@@ -8,3 +8,7 @@ build/
 bin/
 lib/
 .github/**
+.idea/**
+.cproject
+.project
+cmake-build-*
