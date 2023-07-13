@@ -99,12 +99,11 @@ std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node 
 void RoutePlanner::AStarSearch() {
     RouteModel::Node *current_node = start_node;
     // TODO: Implement your solution here.
-    current_node->visited = true;
-    open_list.push_back(current_node);
-    //this->AddNeighbors(start_node);
-    RouteModel::Node *nextNode = nullptr;
+    current_node->visited = true; //since start node is visited
+    open_list.push_back(current_node); //start node is open as well
     while (!open_list.empty()){
         current_node = this->NextNode();
+        //most important check, distance to end node is 0
         if (current_node->distance(*end_node) == 0){
            auto finalPath = this->ConstructFinalPath(current_node);
            this->m_Model.path = finalPath;
