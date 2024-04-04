@@ -9,3 +9,4 @@ bin/
 lib/
 .github/**
 .idea
+cmake-build-debug
