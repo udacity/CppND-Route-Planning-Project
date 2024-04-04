@@ -8,3 +8,4 @@ build/
 bin/
 lib/
 .github/**
+.idea
