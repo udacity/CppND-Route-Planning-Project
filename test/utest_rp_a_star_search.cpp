@@ -68,7 +68,10 @@ TEST_F(RoutePlannerTest, TestCalculateHValue) {
     EXPECT_FLOAT_EQ(route_planner.CalculateHValue(mid_node), 0.58903033);
 }
 
-
+// Test the CalculatedHValue method additional unit tests
+TEST_F(RoutePlannerTest, TestCalculateHValueAdnl) {
+    EXPECT_FLOAT_EQ(route_planner.CalculateHValue(nullptr), std::numeric_limits<float>::max());
+}
 
 // Test the AddNeighbors method.
 bool NodesSame(RouteModel::Node* a, RouteModel::Node* b) { return a == b; }
