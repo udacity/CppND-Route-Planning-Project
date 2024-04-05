@@ -51,7 +51,6 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
 }
 
 
-// TODO 5: Complete the NextNode method to sort the open list and return the next node.
 // Tips:
 // - Sort the open_list according to the sum of the h value and g value.
 // - Create a pointer to the node in the list with the lowest sum.
@@ -59,7 +58,14 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
 // - Return the pointer.
 
 RouteModel::Node *RoutePlanner::NextNode() {
-
+    // Sort the open_list according to the sum of the h value and g value
+    std::sort(this->open_list.begin(), this->open_list.end(), [](RouteModel::Node *a, RouteModel::Node *b){
+        return a->g_value + a->h_value < b->g_value + b->h_value;
+    });
+    // Remove the lowest sum node from the open_list and return a pointer to it
+    RouteModel::Node *lowest = this->open_list.back();
+    this->open_list.pop_back();
+    return lowest;
 }
 
 
