@@ -68,6 +68,22 @@ RouteModel::Node *RoutePlanner::NextNode() {
     return lowest;
 }
 
+// constructPath is a recursive function that walks the node path and calculates the distance traveled.
+// Using a recursive function call allows us to return the final path without having to reverse it.
+void constructPath(std::vector<RouteModel::Node> &path, RouteModel::Node *current_node, float &distance) {
+    // Terminating condition
+    if (current_node == nullptr) {
+        return;
+    }
+    RouteModel::Node *parent_node = current_node->parent;
+    // Recursive function call
+    constructPath(path, parent_node, distance);
+
+    path.push_back(*current_node);
+    if (current_node->parent != nullptr) {
+        distance += current_node->distance(*parent_node);
+    }
+}
 
 // Tips:
 // - This method should take the current (final) node as an argument and iteratively follow the 
@@ -79,20 +95,11 @@ RouteModel::Node *RoutePlanner::NextNode() {
 std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node *current_node) {
     // Create path_found vector
     distance = 0.0f;
-    std::vector<RouteModel::Node> path_found;
+    std::vector<RouteModel::Node> path_found{};
 
-    while(current_node != nullptr) {
-        path_found.push_back(*current_node);
-        RouteModel::Node *parent_node = current_node->parent;
-        if (parent_node != nullptr) {
-            distance = distance + current_node->distance(*parent_node);
-        }
-        current_node = parent_node;
-    }
+    constructPath(path_found, current_node, distance);
 
     distance *= m_Model.MetricScale(); // Multiply the distance by the scale of the map to get meters.
-    // The returned vector should be in the correct order: the start node should be the first element
-    std::reverse(path_found.begin(), path_found.end());
     return path_found;
 }
 
