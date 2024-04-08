@@ -41,6 +41,9 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
     current_node->FindNeighbors();
     // For each node in current_node.neighbors, set the parent, the h_value, the g_value
     for (auto neighbor: current_node->neighbors) {
+        if (neighbor->visited) {
+            continue;
+        }
         neighbor->parent = current_node;
         neighbor->h_value = CalculateHValue(neighbor);
         neighbor->g_value = current_node->g_value + neighbor->distance(*current_node);
@@ -95,16 +98,24 @@ void constructPath(std::vector<RouteModel::Node> &path, RouteModel::Node *curren
 std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node *current_node) {
     // Create path_found vector
     distance = 0.0f;
-    std::vector<RouteModel::Node> path_found{};
+    std::vector<RouteModel::Node> path_found;
 
-    constructPath(path_found, current_node, distance);
+    while(current_node != nullptr) {
+        path_found.push_back(*current_node);
+        RouteModel::Node *parent_node = current_node->parent;
+        if (parent_node != nullptr) {
+            distance = distance + current_node->distance(*parent_node);
+        }
+        current_node = parent_node;
+    }
 
     distance *= m_Model.MetricScale(); // Multiply the distance by the scale of the map to get meters.
+    // The returned vector should be in the correct order: the start node should be the first element
+    std::reverse(path_found.begin(), path_found.end());
     return path_found;
 }
 
 
-// TODO 7: Write the A* Search algorithm here.
 // Tips:
 // - Use the AddNeighbors method to add all of the neighbors of the current node to the open_list.
 // - Use the NextNode() method to sort the open_list and return the next node.
@@ -112,8 +123,21 @@ std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node 
 // - Store the final path in the m_Model.path attribute before the method exits. This path will then be displayed on the map tile.
 
 void RoutePlanner::AStarSearch() {
-    RouteModel::Node *current_node = nullptr;
+    RouteModel::Node *current_node = this->start_node;
+    // Add all of the neighbors of the start node to the open_list
+    AddNeighbors(current_node);
+    start_node->visited = true;
 
-    // TODO: Implement your solution here.
+    while(! this->open_list.empty()) {
+        // Sort the open_list and return the next node
+        current_node = this->NextNode();
 
+        if (current_node == end_node) {
+            // Store the final path in the m_Model.path
+            this->m_Model.path = ConstructFinalPath(current_node);
+            return;
+        }
+        // Add all of the neighbors of the current node to the open_list
+        AddNeighbors(current_node);
+    }
 }
