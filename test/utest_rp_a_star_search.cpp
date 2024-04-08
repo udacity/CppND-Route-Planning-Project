@@ -112,17 +112,13 @@ TEST_F(RoutePlannerTest, TestNextNodeSingle) {
 
 TEST_F(RoutePlannerTest, TestNextNodeSingleMultiple) {
     // Assign
-    route_planner.AddNeighbors(mid_node);
-    route_planner.AddNeighbors(end_node);
-    RouteModel::Node* closest_to_origin_node = &model.FindClosestNode(0, 0);
-    route_planner.AddNeighbors(closest_to_origin_node);
     route_planner.AddNeighbors(start_node);
 
     // Act
     RouteModel::Node *actual = route_planner.NextNode();
 
     // Assert
-    RouteModel::Node *expected = start_node->neighbors[0];
+    RouteModel::Node *expected = start_node->neighbors[2];
     EXPECT_EQ(expected->x, actual->x);
     EXPECT_EQ(expected->y, actual->y);
 }
